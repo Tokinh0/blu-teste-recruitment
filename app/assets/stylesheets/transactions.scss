@@ -1,0 +1,102 @@
+// Place all the styles related to the transactions controller here.
+// They will automatically be included in application.css.scss.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+//global
+.main{
+  background-color: #1D253C;
+}
+.container{
+  height: 100%;
+}
+.logo-blue{
+  position: relative;
+  height: 60px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+//index
+.up-side-menu{
+  padding-top: 15px;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+.transaction-h1-title{
+  color: white;
+}
+.up-side-sub-menu{
+  display: flex;
+  padding: 15px;
+}
+.cpf-filter{
+  margin-right: 15px;
+}
+.filter-section{
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+.clean-filter-button{
+  margin-left: 15px;
+}
+#transactions-table{
+  margin-bottom: 2px;
+}
+.header-table-title{
+  color: white;
+  background-image: linear-gradient(to bottom, #17213d, #424d6c);
+  font-size: medium;
+}
+.transaction-row{
+  background-color: white;
+}
+.total-value-row{
+  color: white;
+}
+
+
+
+
+//new
+.form-page{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  padding: 20px;
+}
+.form-box{
+  height: 100%;
+}
+.actions{
+  bottom: 0;
+  position: fixed;
+}
+.upload-file-button{
+  color: white;
+  margin-top: 20%;
+}
+#import-button{
+  right: 20px;
+}
+.total-value{
+  text-align: end;
+}
+.module {
+  padding: 10rem;
+  color: white;
+  border-width: 3px;
+  border-style: solid;
+  height: max-content;
+  border-image:
+          linear-gradient(
+                          to bottom,
+                          #10203a,
+                          #1D253C
+          ) 1 100%;
+}

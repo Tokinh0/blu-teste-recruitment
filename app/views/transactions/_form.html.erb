@@ -1,0 +1,23 @@
+<%= form_with(model: transaction, local: true, class: 'form-page') do |form| %>
+  <% if transaction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+      <ul>
+        <% transaction.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="module">
+    <div class="form-box">
+      <img src="/header-logo.png" class="logo-blue">
+      <%= form.file_field :file, class: 'btn upload-file-button' %>
+      <div class="actions">
+        <%= link_to 'Voltar', transactions_path, :method => :get, class: 'btn btn-default', id: 'back-button' %>
+        <%= form.submit 'Importar Arquivo', class: 'btn btn-primary action-buttons', id: 'import-button'%>
+      </div>
+    </div>
+  </div>
+<% end %>

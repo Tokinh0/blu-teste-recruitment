@@ -1,0 +1,55 @@
+<navbar class="up-side-menu">
+  <img src="/header-logo.png" class="logo-blue">
+</navbar>
+<h1 class="transaction-h1-title" >Transações</h1>
+<div class="up-side-sub-menu">
+  <%= button_to 'Importar Arquivo', new_transaction_path, class: 'btn btn-primary', :method => :get %>
+  <div class="filter-section">
+    <%= form_tag('/transactions', method: :get, class: 'cpf-filter') do %>
+      <%= search_field_tag 'document_number', 'buscar por CPF', class: 'form-control'%>
+    <% end %>
+    <%= form_tag('/transactions', method: :get, class: 'store-filter', id: 'store_filter') do %>
+      <%= select_tag 'store_name',
+                     options_for_select(@store_names),
+                     :onchange => "this.form.submit()",
+                     prompt: params[:store_name],
+                     class: 'btn'
+      %>
+    <% end %>
+    <%= button_to 'Limpar Filtro', transactions_path, class: 'btn clean-filter-button', :method => :get %>
+  </div>
+</div>
+
+<table class="table table-sm" id="transactions-table">
+  <thead>
+  <tr>
+    <th class="header-table-title" scope="col">Transaction type</th>
+    <th class="header-table-title" scope="col">Occurrence</th>
+    <th class="header-table-title" scope="col">Card number</th>
+    <th class="header-table-title" scope="col">Document number</th>
+    <th class="header-table-title" scope="col">Value</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @transactions.each do |transaction| %>
+    <tr class="bg-info" scope="row">
+      <td class="transaction-row"><%= Transaction.human_enum_name('transaction_types', transaction.transaction_type.to_s) %></td>
+      <td class="transaction-row"><%= transaction.occurrence.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      <td class="transaction-row"><%= transaction.card_number %></td>
+      <td class="transaction-row"><%= transaction.document_number %></td>
+      <td class="transaction-row"><%= transaction.value %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<table class="table table-sm">
+  <thead>
+  <tr>
+    <th class="total-value-row" scope="col">Total:</th>
+    <th class="total-value-row total-value" scope="col"> <%= @transactions.sum(:value) %> </th>
+  </tr>
+  </thead>
+</table>
+
+

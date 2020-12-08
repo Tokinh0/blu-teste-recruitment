@@ -1,0 +1,14 @@
+pt-BR:
+  activerecord:
+    attributes:
+      transaction:
+        transaction_types:
+          debit: "Débito"
+          billet: "Boleto"
+          financing: "Financiamento"
+          credit: "Crédito"
+          loan_receipt: "Recebimento Empréstimo"
+          sell: "Venda"
+          ted_receipt: "Recebimento TED"
+          doc_receipt: "Recebimento DOC"
+          rent: "Aluguel"
