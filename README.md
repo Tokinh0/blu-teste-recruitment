@@ -21,7 +21,7 @@
 
 3. `cp .env.example .env`
 
-4. `docker-compose up --build`
+4. `docker-compose up --build -d`
 
 5. `docker-compose exec web bash`
 
@@ -44,7 +44,7 @@
 
 ### Utilities
 
-1. `troubles with permission? run: 'sudo chown -R $USER:$USER .'`
+1. `troubles with files permission? run inside app root: 'sudo chown -R $USER:$USER .'`
 
 2. `optionally you can generate records with 'rails db:seed' inside bash container`
 
