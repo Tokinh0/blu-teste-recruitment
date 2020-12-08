@@ -6,7 +6,7 @@ class TransactionsController < ApplicationController
     transaction_service = TransactionsService.new(params)
     @store_names ||= transaction_service.store_names
     @transactions ||= transaction_service.list
-    @transactions = @transactions.page(params[:page] || 1) unless @transactions.blank?
+    @transactions = @transactions.page(params[:page] || 1).per(params[:per] || 20) unless @transactions.blank?
   end
 
   # GET /transactions/new

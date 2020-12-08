@@ -46,10 +46,16 @@
 <table class="table table-sm">
   <thead>
   <tr>
-    <th class="total-value-row" scope="col">Total:</th>
+    <th class="total-value-row" scope="col">Valor Total:</th>
     <th class="total-value-row total-value" scope="col"> <%= @transactions.sum(:value) %> </th>
+    <th class="total-value-row" scope="col">Quantidade Total:</th>
+    <th class="total-value-row total-value" scope="col"> <%= @transactions.count %> </th>
   </tr>
   </thead>
 </table>
+
+<%= link_to_previous_page @transactions, 'página anterior' %>
+
+<%= link_to_next_page @transactions, 'proxima página' %>
 
 

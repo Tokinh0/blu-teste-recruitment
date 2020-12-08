@@ -13,19 +13,25 @@
 
   
   
-## Settings
+## Setup
 
-1. `cp .env.example .env`
+1. `clone the project`
 
-2. `docker-compose up --build`
+2. `cd /test_recruitment`
 
-3. `docker-compose exec web bash`
+3. `cp .env.example .env`
 
-4. `rails db:create`
+4. `docker-compose up --build`
 
-5. `rails db:migrate`
+5. `docker-compose exec web bash`
 
-5. `Thats it! C:`
+6. `rails db:create`
+
+7. `rails db:migrate`
+
+8. `check` [localhost](http://localhost:3000)
+
+9. `thats it! C:`
 
 
 

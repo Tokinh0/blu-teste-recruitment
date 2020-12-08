@@ -1,16 +1,19 @@
 class TransactionsService
 
+  CONFIG = {
+      range_for_type: 0,
+      range_for_date: 1..8,
+      range_for_value: 9..18,
+      range_for_document: 19..29,
+      range_for_card_number: 30..41,
+      range_for_date_time: 42..47,
+      range_for_shopkeeper: 48..61,
+      range_for_store: 62..80,
+      format_files: ['txt']
+  }
+
   def initialize(params = nil)
     @params = params
-    @range_for_type = 0
-    @range_for_date = 1..8
-    @range_for_value = 9..18
-    @range_for_document = 19..29
-    @range_for_card_number = 30..41
-    @range_for_date_time = 42..47
-    @range_for_shopkeeper = 48..61
-    @range_for_store = 62..80
-    @format_files = ['txt']
   end
 
   def list
@@ -45,8 +48,8 @@ class TransactionsService
     raise ArgumentError.new("nil file error") if params.blank?
     raise ArgumentError.new("nil file error") if params[:transaction].blank?
     raise ArgumentError.new("nil file error") if params[:transaction][:file].blank?
-    unless format_files.include?(params[:transaction][:file].original_filename.partition('.').last)
-      raise ArgumentError.new("file format error, supported files are: #{format_files}")
+    unless CONFIG[:format_files].include?(params[:transaction][:file].original_filename.partition('.').last)
+      raise ArgumentError.new("file format error, supported files are: #{CONFIG[:format_files]}")
     end
     true
   end
@@ -75,7 +78,9 @@ class TransactionsService
   end
 
   def find_or_create_shopkeepers(transactions_array)
-    shopkeeper_names = transactions_array.map{ |x| x[range_for_shopkeeper]&.force_encoding('utf-8').strip.upcase }.uniq.reject(&:blank?)
+    shopkeeper_names = transactions_array.map do |line|
+      line[CONFIG[:range_for_shopkeeper]]&.force_encoding('utf-8').strip.upcase
+    end.uniq.reject(&:blank?)
     existing_shopkeepers = Shopkeeper.where(name: shopkeeper_names).pluck(:name)
     shopkeeper_names = shopkeeper_names - existing_shopkeepers
     unless shopkeeper_names.blank?
@@ -92,8 +97,8 @@ class TransactionsService
     shopkeepers_hash = Shopkeeper.all.map{ |shopkeeper| { id: shopkeeper.id, name: shopkeeper.name } }
     stores_array = transactions_array.map do |line|
       [
-          line[range_for_store]&.force_encoding('utf-8').strip.upcase,
-          line[range_for_shopkeeper]&.force_encoding('utf-8').strip.upcase
+          line[CONFIG[:range_for_store]]&.force_encoding('utf-8').strip.upcase,
+          line[CONFIG[:range_for_shopkeeper]]&.force_encoding('utf-8').strip.upcase
       ]
     end.uniq.reject(&:blank?)
     stores_array.map do |store|
@@ -110,28 +115,19 @@ class TransactionsService
     stores_hash = Store.all.map{ |store| { id: store.id, name: store.name } }
     transactions_hash = transactions_array.map do |line|
       {
-          transaction_type: Transaction.transaction_types.key(line[range_for_type].to_i),
-          occurrence: "#{line[range_for_date]}#{line[range_for_date_time]}".to_datetime.in_time_zone(Time.zone),
-          value: (line[range_for_value].to_d/100).to_d,
-          document_number: line[range_for_document],
-          card_number: line[range_for_card_number],
+          transaction_type: Transaction.transaction_types.key(line[CONFIG[:range_for_type]].to_i),
+          occurrence: "#{line[CONFIG[:range_for_date]]}#{line[CONFIG[:range_for_date_time]]}".to_datetime.in_time_zone(Time.zone),
+          value: (line[CONFIG[:range_for_value]].to_d/100).to_d,
+          document_number: line[CONFIG[:range_for_document]],
+          card_number: line[CONFIG[:range_for_card_number]],
           store_id: stores_hash.detect do |store|
-            store[:name].parameterize == line[range_for_store].force_encoding('utf-8').strip.parameterize
+            store[:name].parameterize == line[CONFIG[:range_for_store]].force_encoding('utf-8').strip.parameterize
           end[:id]
       }
     end
     transactions_hash.uniq.reject(&:blank?)
   end
 
-  attr_accessor :params,
-                :range_for_type,
-                :range_for_date,
-                :range_for_value,
-                :range_for_document,
-                :range_for_card_number,
-                :range_for_date_time,
-                :range_for_shopkeeper,
-                :range_for_store,
-                :format_files
+  attr_accessor :params
 
 end
