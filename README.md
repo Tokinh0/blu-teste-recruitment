@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Teste de recrutamento blu.
 
-Things you may want to cover:
+* Ruby version - ruby-2.5.8
 
-* Ruby version
+* System dependencies 
 
-* System dependencies
+  docker/docker-compose - https://docs.docker.com/compose/install/
 
 * Configuration
+  
+  Com o docker-compose devidamente instalado basta fazer o download (pull) do projeto, alterar o nome do arquivo <.env.example> para apenas <.env> e executar o comando <docker-compose up --build> na raiz o projeto para buildar a aplicação
+  
+  Caso tenha problemas com permissões devido ao docker basta rodar o comando <sudo chown -R $USER:$USER .> na raiz do projeto.
 
 * Database creation
 
-* Database initialization
+Na raiz do projeto execute o comando <docker-compose exec web bash> após o build da aplicação para acessar o bash do container, no bash do container execute os comandos <rails db:create> para a criação do banco e <rails db:migrate> para migrar as tabelas para o banco 
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
+* Utilidade
+  Caso tenha problemas com permissões devido ao docker basta rodar o comando <sudo chown -R $USER:$USER .> na raiz do projeto.
+  Para semear o banco com dados basta rodar o comando <rails db:seed> no bash do container.
 * ...
